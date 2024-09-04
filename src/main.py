@@ -1,10 +1,7 @@
 import argparse
 
 from download import download
-
-
-def process(args):
-    print(f"Processing data file: {args.data_file}")
+from process import process
 
 
 def main():
@@ -27,7 +24,10 @@ def main():
     # Subparser for the 'process' command
     parser_process = subparsers.add_parser("process", help="Process data")
     parser_process.add_argument(
-        "--data_file", required=True, help="Path to the data file"
+        "--input_folder", required=True, help="Folder path for loading downloaded icons"
+    )
+    parser_process.add_argument(
+        "--output_folder", required=True, help="Folder path for saving processed icons"
     )
 
     # Parse the arguments and call appropriate function for the subcommand
@@ -36,7 +36,7 @@ def main():
         # download(data_folder="data/raw/wikimedia", url_file="data/raw/wikimedia/urls.txt")
         download(data_folder=args.data_folder, url_file=args.url_file)
     elif args.command == "process":
-        process(args)
+        process(input_folder=args.input_folder, output_folder=args.output_folder)
     else:
         parser.print_help()
 
