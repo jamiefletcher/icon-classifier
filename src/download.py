@@ -35,5 +35,8 @@ class WikiIcon:
 
     def meaning(self):
         description = self.img_info["extmetadata"]["ImageDescription"]["value"]
-        pattern = r"Function/description:\s*(.*?)(<[^>]+>)"
-        return re.search(pattern, description, re.DOTALL).group(1).strip()
+        pattern = r"Function/description:\s*(.*?)(<[^>]+>|\n|$)"
+        result = re.search(pattern, description)
+        if result:
+            return result.group(1).strip()
+        return ""

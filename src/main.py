@@ -2,7 +2,7 @@ from download import WikiIcon
 import json
 
 def download(data_folder):    
-    url_file = f"{data_folder}/urls2.txt"
+    url_file = f"{data_folder}/urls.txt"
     json_file = f"{data_folder}/icon_descriptions.json"
 
     meanings = []
