@@ -1,8 +1,13 @@
+import json
 import os.path
 import re
+
 import requests
 
-headers = {'User-Agent': 'DashboardIconDownloadBot/0.0 (68712911+jamiefletcher@users.noreply.github.com)'}
+headers = {
+    "User-Agent": "DashboardIconDownloadBot/0.0 (68712911+jamiefletcher@users.noreply.github.com)"
+}
+
 
 class WikiIcon:
     def __init__(self, img_url: str, pixels=480):
@@ -25,7 +30,7 @@ class WikiIcon:
     def download(self, folder: str):
         for img_type, img_url in self._img_urls:
             filename = os.path.basename(img_url)
-            r = requests.get(img_url, headers=headers)    
+            r = requests.get(img_url, headers=headers)
             with open(f"{folder}/{img_type}/{filename}", "wb") as fd:
                 fd.write(r.content)
 
@@ -40,3 +45,17 @@ class WikiIcon:
         if result:
             return result.group(1).strip()
         return ""
+
+
+def download(data_folder, url_file):
+    meanings = []
+
+    with open(url_file, "r") as f:
+        for url in f:
+            w = WikiIcon(url.strip())
+            w.download(data_folder)
+            meanings.append({"files": w.filenames, "meaning": w.meaning()})
+
+    json_file = f"{data_folder}/icon_descriptions.json"
+    with open(json_file, "w") as f:
+        json.dump(meanings, f, indent=4)
