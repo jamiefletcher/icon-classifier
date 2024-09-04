@@ -1,12 +1,26 @@
 from download import WikiIcon
+import json
+
+def download(data_folder):    
+    url_file = f"{data_folder}/urls2.txt"
+    json_file = f"{data_folder}/icon_descriptions.json"
+
+    meanings = []
+
+    with open(url_file, "r") as f:
+        for url in f:
+            w = WikiIcon(url.strip())
+            w.download(data_folder)
+            meanings.append({
+                "files" : w.filenames,
+                "meaning" : w.meaning()
+            })
+    
+    with open(json_file, "w") as f:
+        json.dump(meanings, f, indent=4)
 
 def main():
-    wi_test = WikiIcon("https://upload.wikimedia.org/wikipedia/commons/1/13/ISO_7000_-_Ref-No_0082.svg")
-    print(wi_test.filenames)
-
-    wi_test.download(folder="data/raw/wikimedia")
-
-    print(wi_test.meaning())
+    download(data_folder = "data/raw/wikimedia")
 
 if __name__ == "__main__":
     main()

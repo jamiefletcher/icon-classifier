@@ -1,5 +1,8 @@
 import os.path
+import re
 import requests
+
+headers = {'User-Agent': 'DashboardIconDownloadBot/0.0 (68712911+jamiefletcher@users.noreply.github.com)'}
 
 class WikiIcon:
     def __init__(self, img_url: str, pixels=480):
@@ -22,14 +25,15 @@ class WikiIcon:
     def download(self, folder: str):
         for img_type, img_url in self._img_urls:
             filename = os.path.basename(img_url)
-            r = requests.get(img_url)    
+            r = requests.get(img_url, headers=headers)    
             with open(f"{folder}/{img_type}/{filename}", "wb") as fd:
                 fd.write(r.content)
 
-        r_json = requests.get(self._json_url).json()
+        r_json = requests.get(self._json_url, headers=headers).json()
         for page in r_json["query"]["pages"].values():
             self.img_info = page["imageinfo"][0]
 
     def meaning(self):
         description = self.img_info["extmetadata"]["ImageDescription"]["value"]
-        return description
+        pattern = r"Function/description:\s*(.*?)(<[^>]+>)"
+        return re.search(pattern, description, re.DOTALL).group(1).strip()
