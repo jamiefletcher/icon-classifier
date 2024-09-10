@@ -5,3 +5,7 @@ __pycache__/
 
 # Environments
 .venv
+
+# Model outputs
+/notebooks/final_model
+/notebooks/results
