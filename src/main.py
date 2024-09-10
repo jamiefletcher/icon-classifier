@@ -2,7 +2,7 @@ import argparse
 
 from download import download
 from process import process
-
+from make_dataset import make_dataset
 
 def main():
     parser = argparse.ArgumentParser(
@@ -30,6 +30,18 @@ def main():
         "--output_folder", required=True, help="Folder path for saving processed icons"
     )
 
+    # Subparser for the 'make-ds' command
+    parser_process = subparsers.add_parser("make-ds", help="Make dataset")
+    parser_process.add_argument(
+        "--input_folder", required=True, help="Folder path for loading processed icons"
+    )
+    parser_process.add_argument(
+        "--output_folder", required=True, help="Folder path for saving Hugging Face dataset"
+    )
+    parser_process.add_argument(
+        "--test_size", required=False, type=float, default=0.2, help="Percent of dataset to reserve for test set"
+    )
+
     # Parse the arguments and call appropriate function for the subcommand
     args = parser.parse_args()
     if args.command == "download":
@@ -37,6 +49,8 @@ def main():
         download(data_folder=args.data_folder, url_file=args.url_file)
     elif args.command == "process":
         process(input_folder=args.input_folder, output_folder=args.output_folder)
+    elif args.command == "make-ds":
+        make_dataset(input_folder=args.input_folder, output_folder=args.output_folder, test_size=args.test_size)
     else:
         parser.print_help()
 
