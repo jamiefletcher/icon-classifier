@@ -7,4 +7,5 @@ __pycache__/
 .venv
 
 # Model outputs
+/data/processed/huggingface
 /models
