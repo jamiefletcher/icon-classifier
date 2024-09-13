@@ -3,6 +3,7 @@ import argparse
 from download import download
 from process import process
 from make_dataset import make_dataset
+from eval_model import eval_model
 
 def main():
     parser = argparse.ArgumentParser(
@@ -42,6 +43,15 @@ def main():
         "--test_size", required=False, type=float, default=0.2, help="Percent of dataset to reserve for test set"
     )
 
+    # Subparser for the 'evaluate' command
+    parser_process = subparsers.add_parser("evaluate", help="Evaluate model on test dataset")
+    parser_process.add_argument(
+        "--model", required=True, help="Folder path for loading saved model"
+    )
+    parser_process.add_argument(
+        "--dataset", required=True, help="Folder path for loading Hugging Face dataset"
+    )
+
     # Parse the arguments and call appropriate function for the subcommand
     args = parser.parse_args()
     if args.command == "download":
@@ -51,6 +61,8 @@ def main():
         process(input_folder=args.input_folder, output_folder=args.output_folder)
     elif args.command == "make-ds":
         make_dataset(input_folder=args.input_folder, output_folder=args.output_folder, test_size=args.test_size)
+    elif args.command == "evaluate":
+        eval_model(model_folder=args.model, dataset_folder=args.dataset)
     else:
         parser.print_help()
 
