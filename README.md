@@ -34,16 +34,26 @@ This repository contains:
 The `src/main.py` script can be run directly from the command line. The following subcommands are implemented:
 
 **Downloading icons from Wikimedia**
-```python src/main.py download --data_folder=data/raw/wikimedia --url_file=data/raw/wikimedia/urls.txt```
+```
+python src/main.py download --data_folder=data/raw/wikimedia --url_file=data/raw/wikimedia/urls.txt
+```
 
 **Pre-processing the icon images**
-```python src/main.py process --input_folder=data/processed/selected --output_folder=data/processed/variants```
+```
+python src/main.py process --input_folder=data/processed/selected --output_folder=data/processed/variants
+```
 
 **Making a Hugging Face dataset from the processed icon images**
-```python src/main.py make-ds --input_folder="data/processed/variants" --output_folder="data/processed/huggingface" --test_size=0.2```
+```
+python src/main.py make-ds --input_folder="data/processed/variants" --output_folder="data/processed/huggingface" --test_size=0.2
+```
 
 **Train icon image classifier using k-folds cross-validation**
-```python src/main.py train --dataset="data/processed/huggingface" --base_model="google/vit-base-patch16-224" --k-folds=5 --output_folder="models"```
+```
+python src/main.py train --dataset="data/processed/huggingface" --base_model="google/vit-base-patch16-224" --k-folds=5 --output_folder="models"
+```
 
 **Evaluate classifier on test dataset**
-```python src/main.py evaluate --model="models/results/final_model" --dataset="data/processed/huggingface"```
+```
+python src/main.py evaluate --model="models/results/final_model" --dataset="data/processed/huggingface"
+```
