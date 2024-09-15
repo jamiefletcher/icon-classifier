@@ -50,7 +50,7 @@ python src/main.py make-ds --input_folder="data/processed/variants" --output_fol
 
 **Train icon image classifier using k-folds cross-validation**
 ```
-python src/main.py train --dataset="data/processed/huggingface" --base_model="google/vit-base-patch16-224" --k-folds=5 --output_folder="models"
+python src/main.py train --dataset="data/processed/huggingface" --json_args="src/training_args.json"
 ```
 
 **Evaluate classifier on test dataset**
