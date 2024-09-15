@@ -4,6 +4,7 @@ from download import download
 from process import process
 from make_dataset import make_dataset
 from eval_model import eval_model
+from train import train
 
 def main():
     parser = argparse.ArgumentParser(
@@ -43,6 +44,15 @@ def main():
         "--test_size", required=False, type=float, default=0.2, help="Percent of dataset to reserve for test set"
     )
 
+    # Subparser for the 'train' command
+    parser_process = subparsers.add_parser("train", help="Train model on dataset with k-folds cross-validation")
+    parser_process.add_argument(
+        "--dataset", required=True, help="Folder path for loading Hugging Face dataset"
+    )
+    parser_process.add_argument(
+        "--json_args", required=True, help="File path for loading JSON file with training arguments"
+    )
+
     # Subparser for the 'evaluate' command
     parser_process = subparsers.add_parser("evaluate", help="Evaluate model on test dataset")
     parser_process.add_argument(
@@ -55,12 +65,13 @@ def main():
     # Parse the arguments and call appropriate function for the subcommand
     args = parser.parse_args()
     if args.command == "download":
-        # download(data_folder="data/raw/wikimedia", url_file="data/raw/wikimedia/urls.txt")
         download(data_folder=args.data_folder, url_file=args.url_file)
     elif args.command == "process":
         process(input_folder=args.input_folder, output_folder=args.output_folder)
     elif args.command == "make-ds":
         make_dataset(input_folder=args.input_folder, output_folder=args.output_folder, test_size=args.test_size)
+    elif args.command == "train":
+        train(dataset_folder=args.dataset, training_args_json=args.json_args)
     elif args.command == "evaluate":
         eval_model(model_folder=args.model, dataset_folder=args.dataset)
     else:
