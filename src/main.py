@@ -1,10 +1,10 @@
 import argparse
 
-from download import download
-from process import process
-from make_dataset import make_dataset
-from eval_model import eval_model
-from train import train
+from src.download import download
+from src.process import process
+from src.make_dataset import make_dataset
+from src.eval_model import eval_model
+from src.train import train
 
 def main():
     parser = argparse.ArgumentParser(

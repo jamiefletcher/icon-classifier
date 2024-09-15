@@ -4,7 +4,7 @@ from datasets import load_from_disk
 from sklearn.model_selection import KFold
 from transformers import Trainer, TrainingArguments, ViTForImageClassification
 
-from eval_model import compute_accuracy
+from src.eval_model import compute_accuracy
 
 
 def load_args(input_json: str):
