@@ -1,5 +1,5 @@
 # icon-classifier
-Dashboard icon classifier in Python using vision transformers
+Dashboard icon image classifier in Python using PyTorch and vision transformers
 
 This is a spin-off project from another research project where large vision language models (LVLMs) were used to generate descriptions of icons that appear on vehicle dashboards. That work was [presented](docs/LUSRC2024_poster.pdf) at the [Lassonde Undergraduate Summer Research Conference 2024](https://lassonde.yorku.ca/research/lassonde-undergraduate-research-conference-2024-2), where it won first place!
 
